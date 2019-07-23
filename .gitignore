@@ -3,6 +3,14 @@ Thumbs.db
 ehthumbs.db
 Desktop.ini
 
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+
 # Logs
 logs
 *.log
@@ -13,6 +21,7 @@ lerna-debug.log*
 
 # Dependency directories
 node_modules/
+/dist/
 jspm_packages/
 
 # Optional npm cache directory
