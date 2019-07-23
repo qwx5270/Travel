@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vue.js"></script>
+  <title>Vue中的列表过渡</title>
+  <style>
+    .v-enter, .v-leave-to {
+      opacity: 0;
+    }
+    .v-enter-active, .v-leave-active {
+      transition: opacity 2s;
+    }
+  </style>
+</head>
+<body>
+  <!-- transition-group  列表项每个元素都加了<transition></transition>-->
+  <div id="root">
+    内容: <input type="text" value="" v-model="content">
+      <ul>
+        <transition-group>
+          <li v-for="item of list" :key="item.id">{{item.text}}</li>
+        </transition-group>
+      </ul>
+    <button type="button" @click="handleAddClick">添加</button>
+  </div>
+
+  <script>
+    var count = 0;
+    var vm = new Vue({
+      el: "#root",
+      data: {
+        content: '',
+        list: []
+      },
+      methods: {
+        handleAddClick: function () {
+          if(this.content.length != 0) {
+            this.list.push({id: count++, text: this.content});
+            this.content = null;
+          }
+        }
+      }
+    })
+  </script>
+</body>
+</html>

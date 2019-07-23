@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vue.js"></script>
+  <title>vue中的列表渲染</title>
+</head>
+<body>
+  <div id="app">
+    <!-- 设置key值 提高性能  最好不要把index设为key值 -->
+    <div v-for="(item, index) of list"
+         :key="item.id">
+      {{item.text}} --------- {{index}}
+    </div>
+    <br>
+    <!-- template 占位符  在页面渲染时不会出现该节点 -->
+    <template v-for="(item, index) of list"
+         :key="item.id">
+      <div>
+        {{item.text}} --------- {{index}}
+      </div>
+      <span>{{item.text}}</span>
+    </template>
+    <br><br>
+
+    <!-- 遍历对象 -->
+    <div v-for="(item, key, index) of userInfo">
+      {{index}}-----{{key}}-----{{item}}
+    </div>
+  </div>
+
+
+  <script>
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        list: [{id:000001, text: "aaa"}, {id: 000002, text: "bbb"},
+                {id: 000003, text: "ccc"}, {id:000004, text:"ddd"},
+                {id: 000005, text: "eee"}],
+        userInfo: {
+          name: 'qwx',
+          age: 21,
+          gender: 'male',
+          salary: 'secret'
+        }
+      }
+    })
+
+    //数组操作方法
+    //1.只能使用vue推荐的变异方法  才能实时更新页面数据
+    //push pop shift unshift splice sort reverse
+
+    //2. 改变数据的引用地址
+
+    //3.通过set方法    Vue.set(vm.list, 1, {id: 000008, text: "hahahah"})
+    //                vm.$set(vm.list, 3, {id: 000008, text: "hahahah"})
+
+    //  对象添加      1.改变数据的引用地址    2. 通过set方法   Vue.set(vm.userInfo, "address", "shanghai");
+    //                                                      vm.$set(vm.userInfo, "address", "shanghai")
+  </script>
+</body>
+</html>

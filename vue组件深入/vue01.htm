@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vue.js"></script>
+  <title>父子组件传值</title>
+</head>
+<body>
+  <!-- 父组件向子组件传值是通过属性的形式传递的 -->
+  <!-- 子组件通过事件触发的形式向父组件 -->
+  <div id="root">
+    <counter :count="0" @change="handleChange" ref="number1"></counter>
+    <counter :count="1" @change="handleChange" ref="number2"></counter>
+    总和为: <span>{{total}}</span>
+  </div>
+
+  <script>
+    var counter = {
+      props: ['count'],
+      data: function () {
+        return {
+          number: this.count
+        }
+      },
+      template: '<div @click="handleClick">{{number}}</div>',
+      methods: {
+        handleClick: function () {
+          //如果没有自己的data里的数据 (可以拷贝副本形式) 直接用this.number++;   出错   单向数据流  不能直接修改从父组件传过来的值
+          this.number += 2;
+          this.$emit('change', 2)
+        }
+      }
+    }
+
+    var vm = new Vue({
+      el: '#root',
+      data: {
+        total: 1
+      },
+      components: {
+        counter: counter
+      },
+      methods: {
+        handleChange: function (step) {
+          console.log('step: ' +step)
+          this.total = this.total + step;
+        }
+      },
+      computed: {
+
+      }
+    })
+  </script>
+</body>
+</html>

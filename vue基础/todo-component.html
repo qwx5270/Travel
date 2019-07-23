@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vue.js"></script>
+  <title>组件化 todoList  父子组件传值</title>
+</head>
+<body>
+  <div id="root">
+    <input type="text" v-model="content" value="" placeholder="请输入内容">
+    <button type="button" @click="handleBtnClick">提交</button>
+    <ul>
+      <todo-item :todo="item"
+                  v-for="(item, index) in lists"
+                  :index="index"
+                  :key="index"
+                  @delete="handleItemDelete">
+      </todo-item>
+    </ul>
+
+  </div>
+
+  <script>
+    //全局组件
+    // Vue.component("TodoItem", {
+    //   props: ['todo'],
+    //   template: "<li>{{todo}}</li>"
+    // })
+
+    //局部组件
+    var TodoItem = {
+      props: ['todo', 'index'],
+      template: "<li @click='handleItemClick'>{{todo}}</li>",
+      methods: {
+        handleItemClick: function () {
+          //confirm('是否删除?');
+          this.$emit("delete", this.index)       //子组件向父组件传值 通过$emit
+        }
+      }
+    }
+
+    var app = new Vue({
+      el: '#root',
+      components: {
+        TodoItem: TodoItem        //挂载组件
+      },
+      data: {
+        content: '',
+        lists: [],
+      },
+      methods: {
+        handleBtnClick: function () {
+          if(this.content !== null) {
+            this.lists.push(this.content);
+            this.content = '';
+          }
+        },
+        handleItemDelete: function (index) {
+          this.lists.splice(index, 1);
+        }
+       }
+    })
+  </script>
+</body>
+</html>

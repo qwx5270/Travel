@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vue.js"></script>
+  <title>Vue中多个元素或组件的过渡动画</title>
+  <style>
+    .v-enter, .v-leave-to {
+      opacity: 0;
+    }
+    .v-enter-active, .v-leave-active {
+      transition: opacity 1s;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <!-- 多个个元素过渡  设置key值阻止复用 -->
+    <!-- mode="out-in"  或  in-out -->
+    <transition mode="in-out">
+      <div v-if="show" key="hello">你好吗？zbc</div>
+      <div v-else key="bye">Bye, Q</div>
+    </transition>
+
+    <button type="button" @click="handleClick">点击</button>
+
+    <br><br>
+
+<!--  组件的过渡动画 -->
+    <transition model="out-in">
+      <component :is="type"></component>
+    </transition>
+
+    <button type="button" @click="handleBtnClick">Toggle</button>
+  </div>
+
+  <script type="text/javascript">
+    Vue.component('child-one', {
+      template: '<div v-once>这是 child-one</div>'
+    })
+
+    Vue.component('child-two', {
+      template: '<div v-once>这是 child-two</div>'
+    })
+
+    var vm = new Vue({
+      el: "#root",
+      data: {
+        show: true,
+        type: "child-one"
+      },
+      methods: {
+        handleClick: function () {
+          this.show = !this.show;
+        },
+        handleBtnClick: function () {
+          this.type = this.type === "child-one" ? "child-two" : "child-one";
+        }
+      }
+    })
+  </script>
+</body>
+</html>

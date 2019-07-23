@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vue.js"></script>
+  <title>组件参数校验与非Props特性</title>
+</head>
+<body>
+  <!-- Props特性  与   非Props特性-->
+  <div id="root">
+    <child content='hello, world'></child>
+  </div>
+
+  <script>
+    Vue.component('child', {
+      //类型检测
+      props: {
+        //或者 content: [String, Number, Object]
+        content: {
+          type: String,
+          required: false,   //true 必须传参数
+          default: 'default value...',
+          validator: function (val) {          //自定义校验器
+            return (val.length > 5)
+          }
+        }
+      },
+      template: '<div>{{content}}</div>'
+    })
+
+    var vm = new Vue({
+      el: "#root"
+    })
+  </script>
+</body>
+</html>

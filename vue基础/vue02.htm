@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vue.js"></script>
+  <title>Vue实例周期函数</title>
+</head>
+<body>
+  <div id="app">
+  </div>
+
+  <script type="text/javascript">
+    //生命周期函数就是vue实例在某个时间点会自动执行的函数
+    var vm = new Vue({
+      el: '#app',
+      data: {
+        msg: '生命周期函数说明'
+      },
+      template: "<div>{{msg}}</div>",
+      beforeCreate: function () {
+        console.log('beforeCreate');
+      },
+      created: function () {
+        console.log('created');
+      },
+      beforeMount: function () {
+        console.log(this.$el);
+        console.log('beforeMount');
+      },
+      mounted: function () {
+        console.log(this.$el);
+        console.log('mounted');
+      },
+      // 调用vm.$destroy()
+      beforeDestroy: function () {
+        console.log('beforeDestroy');
+      },
+      destroyed: function () {
+        console.log('destroyed');
+      },
+      //vm.msg = 'hello, world'
+      beforeUpdate: function () {
+        console.log('beforeUpdate');
+      },
+      updated: function () {
+        console.log('updated');
+      }
+    })
+  </script>
+</body>
+</html>

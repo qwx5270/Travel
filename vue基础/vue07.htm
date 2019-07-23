@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vue.js"></script>
+  <title>vue条件渲染</title>
+</head>
+<body>
+  <div id="app" >
+    <!-- v-if 与v-else 紧贴在一起使用   js表达式 -->
+    <div v-if="show">{{msg}}</div>
+    <div v-else>Bye vue</div>
+    <!-- v-show  display="none" -->
+    <div v-show="show">{{msg}}</div>
+
+    <!--key值 防止复用  -->
+    <div v-if="show">
+      用户名: <input type="text" key="username">
+    </div>
+    <div v-else>
+      密码: <input type="text" key="password">
+    </div>
+    <button type="button" @click="handleClick">切换</button>
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: "#app",
+      data: {
+        show: true,
+        msg: "Hello, world"
+      },
+      methods: {
+        handleClick: function () {
+          this.show = !this.show;
+        }
+      }
+    })
+  </script>
+</body>
+</html>

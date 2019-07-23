@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vue.js"></script>
+  <title>组件使用中的细节点</title>
+</head>
+<body>
+  <div id="root">
+    <table>
+      <tbody>
+        <!-- <rows></rows>   不能正确解析 不符合H5规范   is="row"解决-->
+        <!-- ol ul select 下的标签 都用is 解决BUG-->
+        <tr is="row"></tr>
+        <tr is="row"></tr>
+        <tr is="row"></tr>
+      </tbody>
+    </table>
+
+    <br>
+    <!-- 必要时要操作DOM  通过ref引用 -->
+    <div
+        ref="hi" @click="handleClick"
+      >点击我</div>
+
+    <br />
+    <counter ref="one" @change="handleChange"></counter>
+    <counter ref="two" @change="handleChange"></counter>
+    总和是: <span>{{total}}</span>
+  </div>
+
+  <script>
+    //子组件定义data 时， 必须是一个函数  返回其对象
+    Vue.component('row', {
+      data: function () {
+        return {
+          content: '这是内容块'
+        }
+      },
+      template: '<tr><td>{{content}}</td></tr>'
+    })
+
+    //ref 的使用  组件的引用
+    Vue.component('counter', {
+      data: function () {
+        return {
+          number: 0
+        }
+      },
+      template: '<div @click="handleDivClick">{{number}}</div>',
+
+      methods: {
+        handleDivClick: function () {
+          this.number++;
+          this.$emit('change');
+        }
+      }
+    })
+
+    var vm = new Vue({
+      el: '#root',
+      data: {
+        total: 0
+      },
+      methods: {
+        handleClick: function () {
+          alert(this.$refs.hi.innerHTML);
+        },
+        handleChange: function () {
+          this.total = this.$refs.one.number + this.$refs.two.number;
+        }
+      },
+
+    })
+  </script>
+</body>
+</html>

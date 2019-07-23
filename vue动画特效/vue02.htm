@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="animate.css">
+  <script src="vue.js"></script>
+  <title>Vue使用animate.css库</title>
+  <style>
+    @keyframes bounce-in {
+      0% {
+        transform: scale(0);
+      }
+      50% {
+        transform: scale(1.5);
+      }
+      100% {
+        transform: scale(1);
+      }
+    }
+    .active {
+      transform-origin: left center;
+      animation: bounce-in 2s;
+    }
+    .leave {
+      transform-origin: left center;
+      animation: bounce-in 1s reverse;
+    }
+
+    /* .fade-enter, .fade-leave-to {
+      opacity: 0;
+    }
+    .fade-enter-active, .fade-leave-active {
+      transition: opacity 3s;
+    } */
+  </style>
+</head>
+<body>
+  <div id="root">
+    <transition name="fade"
+                appear
+                enter-active-class="active"
+                leave-active-class="leave"
+                appear-active-class="active"
+                >
+      <div v-show="show">你好吗？zbc</div>
+    </transition>
+
+    <button type="button" @click="handleClick">点击</button>
+
+    <br><br>
+
+    <transition name="fade"
+                appear
+                enter-active-class="animated bounceInUp fade-enter-active"
+                leave-active-class="animated swing fade-leave-active"
+                appear-active-class="animated bounceInUp"
+                >
+      <div v-show="play">你好吗？qwx</div>
+    </transition>
+
+    <button type="button" @click="handleBtnClick">点击</button>
+  </div>
+
+  <script type="text/javascript">
+    var vm = new Vue({
+      el: "#root",
+      data: {
+        show: true,
+        play: true
+      },
+      methods: {
+        handleClick: function () {
+          this.show = !this.show;
+        },
+        handleBtnClick: function () {
+          this.play = !this.play;
+        }
+      }
+    })
+  </script>
+</body>
+</html>

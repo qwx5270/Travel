@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vue.js"></script>
+  <title>Vue中的动画封装</title>
+  <style>
+    .v-enter, .v-leave-to {
+      opacity: 0;
+    }
+    .v-enter-active, .v-leave-active {
+      transition: opacity 2s;
+    }
+  </style>
+</head>
+<body>
+  <div id="root">
+    <fade :show="show">
+      <div>你好吗？zbc</div>
+    </fade>
+    <fade :show="show">
+      <h3>hahahah</h3>
+    </fade>
+
+    <button type="button" @click="handleClick">点击</button>
+  </div>
+
+  <script type="text/javascript">
+   // 动画封装
+    Vue.component('fade', {
+      props: ['show'],
+      template: `<transition
+                  @before-enter="handleBeforeEnter"
+                  @enter="handleEnter"
+                  @after-enter="handleAfterEnter"
+      >
+                  <slot v-if="show"></slot>
+                </transition>`,
+      methods: {
+        handleBeforeEnter: function (el) {
+          el.style.color = 'red'
+        },
+        handleEnter: function (el, done) {
+          setTimeout(()=> {
+            el.style.color = 'blue'
+          }, 2000);
+          setTimeout(()=> {
+            done();
+          }, 4000)
+        },
+        handleAfterEnter: function (el) {
+          el.style.color = 'black';
+        }
+      }
+    })
+    var vm = new Vue({
+      el: "#root",
+      data: {
+        show: false
+      },
+      methods: {
+        handleClick: function () {
+          this.show = !this.show;
+        }
+      }
+    })
+  </script>
+</body>
+</html>

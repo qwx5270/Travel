@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vue.js"></script>
+  <title>组件绑定原生事件</title>
+</head>
+<body>
+  <div id="root">
+    <!-- 它是自定义事件    加.native 绑定原生事件  -->
+    <child @click.native="handleClick"></child>
+  </div>
+
+  <script type="text/javascript">
+    Vue.component('child', {
+      template: '<div @click="handleChildClick">This is child</div>',
+      methods: {
+        handleChildClick: function () {
+          //alert('child组件原生事件');
+          //this.$emit('click') 通过$emit 向外触发事件
+        }
+      }
+    })
+
+    var vm = new Vue({
+      el: '#root',
+      methods: {
+        handleClick: function () {
+          alert('ok?');
+        }
+      }
+    })
+  </script>
+</body>
+</html>

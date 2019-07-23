@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <script src="vue.js"></script>
+  <title>Vue实列</title>
+</head>
+<body>
+  <div id="root">
+    <div @click="handleBtnClick">
+      {{msg}}
+    </div>
+    <item></item>
+  </div>
+
+  <script type="text/javascript">
+    Vue.component('item', {
+      template: '<dl><dt>简介：</dt><dd>关于vue实列使用与学习</dd></dl>'
+    })
+
+    var vm = new Vue({
+      el: '#root',
+      data: {
+        msg: 'Hello, vue'
+      },
+      methods: {
+        handleBtnClick: function () {
+          confirm('很高兴与你相遇!')
+        }
+      }
+    })
+  </script>
+
+  <!-- 浏览器控制台  vm.$el     vm.$data      vm.$destroy()  销毁实列 -->
+</body>
+</html>
