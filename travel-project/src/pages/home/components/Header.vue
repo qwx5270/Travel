@@ -33,7 +33,7 @@ export default {
       float: left
       .back-icon
         text-align: center
-        font-size: .4rem
+        font-size: .32rem
     .header-input
       flex: 1
       background: #fff2
